@@ -1,1 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hexstamp — Stamp the world</title>
+  <meta name="description" content="Hexstamp logs the countries you've visited, remembers who you were with and what you did, and fills in your own world map. Private by design: your data never leaves your iCloud.">
 
+  <!-- Open Graph / social sharing -->
+  <meta property="og:title" content="Hexstamp — Stamp the world">
+  <meta property="og:description" content="Log the countries you've visited, keep the memories, and watch your map fill in. Private by design.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hexstamp.com/">
+  <meta property="og:image" content="https://hexstamp.github.io/images/icon-256.png">
+  <meta name="theme-color" content="#312e81">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1d1d1f;
+      --muted: #6e6e73;
+      --accent: #c2410c;
+      --rule: #e5e5ea;
+      --card: #f5f5f7;
+      --frame: #1c1c1e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --fg: #f5f5f7;
+        --muted: #98989d;
+        --accent: #fb923c;
+        --rule: #2c2c2e;
+        --card: #1c1c1e;
+        --frame: #2c2c2e;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      /* On-brand: the app icon's deep-blue → teal gradient */
+      background: linear-gradient(160deg, #312e81 0%, #1e3a8a 45%, #0891b2 100%);
+      color: #ffffff;
+      text-align: center;
+      padding: 64px 24px 0;
+      overflow: hidden;
+    }
+    .hero .icon {
+      width: 96px; height: 96px;
+      border-radius: 22px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      font-weight: 700;
+    }
+    .hero .tagline {
+      font-size: clamp(1.15rem, 3vw, 1.5rem);
+      color: rgba(255,255,255,0.92);
+      margin: 0 auto 10px;
+      max-width: 620px;
+      font-weight: 500;
+    }
+    .hero .sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.72);
+      margin: 0 auto 30px;
+      max-width: 560px;
+    }
+
+    /* App Store button */
+    .appstore {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #000;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 13px;
+      padding: 11px 20px 11px 18px;
+      font-size: 1rem;
+      transition: transform 0.12s ease, opacity 0.12s ease;
+    }
+    .appstore:hover { text-decoration: none; transform: translateY(-1px); opacity: 0.92; }
+    .appstore svg { width: 26px; height: 26px; flex: none; }
+    .appstore .small { font-size: 0.7rem; line-height: 1; opacity: 0.85; display: block; margin-bottom: 3px; }
+    .appstore .big { font-size: 1.18rem; line-height: 1; font-weight: 600; display: block; }
+    .soon {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 999px;
+      padding: 9px 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .hero-shot-wrap { margin-top: 52px; }
+
+    /* ---------- Phone frame ---------- */
+    .phone {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      border-radius: 38px;
+      background: var(--frame);
+      padding: 10px;
+      box-shadow: 0 22px 60px rgba(0,0,0,0.28);
+    }
+    .phone img {
+      display: block;
+      width: 100%;
+      border-radius: 30px;
+    }
+    .hero .phone { box-shadow: 0 30px 80px rgba(0,0,0,0.45); margin-bottom: -60px; }
+
+    /* ---------- Feature rows ---------- */
+    .features { padding: 110px 0 40px; }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      padding: 56px 0;
+    }
+    .row:not(:last-child) { border-bottom: 1px solid var(--rule); }
+    .row.reverse .copy { order: 2; }
+    .row.reverse .art { order: 1; }
+    .row .art { display: flex; justify-content: center; }
+    .row .art .phone { max-width: 270px; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 0 0 10px;
+    }
+    .row h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin: 0 0 14px;
+    }
+    .row p { color: var(--muted); margin: 0 0 16px; font-size: 1.06rem; }
+    .row ul { margin: 0; padding-left: 20px; color: var(--muted); }
+    .row li { margin-bottom: 8px; }
+
+    /* ---------- Privacy band ---------- */
+    .privacy-band {
+      background: var(--card);
+      text-align: center;
+      padding: 72px 24px;
+      margin-top: 40px;
+    }
+    .privacy-band h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0 0 16px; letter-spacing: -0.01em; }
+    .privacy-band p { color: var(--muted); max-width: 640px; margin: 0 auto 14px; font-size: 1.08rem; }
+    .pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 26px; }
+    .pill {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    /* ---------- Final CTA ---------- */
+    .cta { text-align: center; padding: 80px 24px 90px; }
+    .cta h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); margin: 0 0 24px; letter-spacing: -0.01em; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 36px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    footer nav { margin-bottom: 14px; }
+    footer nav a { color: var(--muted); margin: 0 12px; }
+
+    @media (max-width: 760px) {
+      .row { grid-template-columns: 1fr; gap: 30px; text-align: center; padding: 48px 0; }
+      .row.reverse .copy, .row.reverse .art { order: initial; }
+      .row ul { display: inline-block; text-align: left; }
+      .features { padding: 96px 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <img class="icon" src="images/icon-256.png" alt="Hexstamp app icon" width="96" height="96">
+    <h1>Hexstamp</h1>
+    <p class="tagline">Stamp the world.</p>
+    <p class="sub">Log the countries you’ve visited, remember who you were with and what you did, and watch your own world map fill in.</p>
+
+    <!-- TODO: once live, swap the "soon" pill for the App Store button below and set the app id -->
+    <span class="soon">Coming soon to the App Store</span>
+    <!--
+    <a class="appstore" href="https://apps.apple.com/app/hexstamp/idXXXXXXXXXX" aria-label="Download Hexstamp on the App Store">
+      <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+      <span><span class="small">Download on the</span><span class="big">App Store</span></span>
+    </a>
+    -->
+
+    <div class="hero-shot-wrap">
+      <div class="phone">
+        <img src="images/screen-dashboard.png" alt="Hexstamp dashboard showing a world map filling in with visited countries and travel stats">
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ FEATURES ============ -->
+  <main class="wrap features">
+
+    <section class="row">
+      <div class="copy">
+        <p class="eyebrow">See your world fill in</p>
+        <h2>A world map that grows with you.</h2>
+        <p>Every country you visit shades in on your own world map. See how much of the world you’ve covered at a glance — continents, countries, and the percentage of the globe you’ve stamped.</p>
+        <p>Pinch, zoom, and tap a country to jump straight to your trips there.</p>
+      </div>
+      <div class="art">
+        <div class="phone"><img src="images/screen-dashboard.png" alt="World map dashboard with visited countries shaded and headline travel stats"></div>
+      </div>
+    </section>
+
+    <section class="row reverse">
+      <div class="copy">
+        <p class="eyebrow">Your passport, reimagined</p>
+        <h2>A stamp for every trip.</h2>
+        <p>Each trip earns a hexagon stamp in your passport — a honeycomb of everywhere you’ve been, coloured by continent. It’s the collection you actually want to keep growing.</p>
+      </div>
+      <div class="art">
+        <div class="phone"><img src="images/screen-passport.png" alt="Passport screen: a honeycomb of hexagon stamps, one per trip"></div>
+      </div>
+    </section>
+
+    <section class="row">
+      <div class="copy">
+        <p class="eyebrow">Remember the trip, not just the place</p>
+        <h2>Who you were with. What you did.</h2>
+        <p>A country on a map is just the start. For every trip, keep the memories:</p>
+        <ul>
+          <li>Tag the companions you travelled with — with a photo to remember their faces.</li>
+          <li>Add highlight photos from the trip.</li>
+          <li>Keep a dated journal of what happened, day by day.</li>
+          <li>Note the cities, regions and landmarks you saw.</li>
+        </ul>
+      </div>
+      <div class="art">
+        <div class="phone"><img src="images/screen-trip.png" alt="A trip with companions, photos, places and journal entries"></div>
+      </div>
+    </section>
+
+    <section class="row reverse">
+      <div class="copy">
+        <p class="eyebrow">At a glance</p>
+        <h2>Your next trip, on your home screen.</h2>
+        <p>Add the Hexstamp widget and count down to your next planned trip without opening the app — or see how much of the world you’ve seen so far. It refreshes each day.</p>
+      </div>
+      <div class="art">
+        <div class="phone"><img src="images/screen-widget.png" alt="Hexstamp home screen widget showing the next trip countdown"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ PRIVACY ============ -->
+  <section class="privacy-band">
+    <div class="wrap">
+      <h2>Private by design.</h2>
+      <p>Hexstamp has no server of its own. Your trips, photos and memories live only on your devices and in your own private iCloud — the developer never sees your data. No account to create, no tracking, no ads.</p>
+      <div class="pills">
+        <span class="pill">No account</span>
+        <span class="pill">No tracking</span>
+        <span class="pill">No ads</span>
+        <span class="pill">On-device detection</span>
+        <span class="pill">Optional Face ID lock</span>
+        <span class="pill">Your own iCloud</span>
+      </div>
+      <p style="margin-top:26px"><a href="privacy.html">Read the full privacy policy →</a></p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="cta">
+    <h2>Start stamping the world.</h2>
+    <span class="soon">Coming soon to the App Store</span>
+  </section>
+
+  <footer>
+    <nav>
+      <a href="privacy.html">Privacy</a>
+      <!-- TODO: replace with your Hexstamp support address -->
+      <a href="mailto:support@hexstamp.com">Support</a>
+    </nav>
+    © 2026 Hexstamp
+  </footer>
+
+</body>
+</html>
