@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="canonical" href="https://hexstamp.com/import.html">
+  <title>Hexstamp — Import your trips</title>
+  <meta name="description" content="Bulk-import your travel history into Hexstamp from a CSV spreadsheet. Download the template, fill it in, and import.">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1d1d1f;
+      --muted: #6e6e73;
+      --accent: #c2410c;
+      --rule: #e5e5ea;
+      --card: #f5f5f7;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --fg: #f5f5f7;
+        --muted: #98989d;
+        --accent: #fb923c;
+        --rule: #2c2c2e;
+        --card: #1c1c1e;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 0 20px;
+    }
+    main { max-width: 720px; margin: 0 auto; padding: 56px 0 80px; }
+    header { margin-bottom: 40px; }
+    h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.01em; }
+    h2 { font-size: 1.3rem; margin: 44px 0 12px; letter-spacing: -0.01em; }
+    p { margin: 0 0 16px; }
+    a { color: var(--accent); }
+    ul, ol { margin: 0 0 16px; padding-left: 22px; }
+    li { margin-bottom: 8px; }
+    strong { font-weight: 600; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; background: var(--card); padding: 1px 5px; border-radius: 5px; }
+    .lead { background: var(--card); border-radius: 14px; padding: 20px 24px; }
+    .lead ul { margin-bottom: 0; }
+    .download {
+      display: inline-block;
+      margin: 8px 0 12px;
+      padding: 12px 22px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    table { border-collapse: collapse; width: 100%; margin: 0 0 16px; font-size: 0.92rem; display: block; overflow-x: auto; }
+    th, td { border: 1px solid var(--rule); padding: 7px 10px; text-align: left; white-space: nowrap; }
+    th { background: var(--card); }
+    .pro { color: var(--accent); font-weight: 600; }
+    footer { margin-top: 56px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p style="margin:0 0 18px"><a href="index.html" style="font-size:0.95rem">← Hexstamp home</a></p>
+      <h1>Import your trips</h1>
+      <p class="effective" style="color:var(--muted);margin:0">Load your whole travel history at once from a spreadsheet.</p>
+    </header>
+
+    <p>If you already have a list of the countries you’ve visited, you don’t have
+    to add them one by one. Fill in a simple spreadsheet and import it — Hexstamp
+    turns each row into a trip on your map.</p>
+
+    <a class="download" href="hexstamp-trips-template.csv" download>⬇︎ Download the template (CSV)</a>
+    <p style="color:var(--muted);font-size:0.95rem">Opens in Numbers, Excel or Google Sheets.</p>
+
+    <h2>Fill it in</h2>
+    <p>One row per country. The first four columns are all you need:</p>
+    <table>
+      <tr><th>Country</th><th>From</th><th>To</th><th>Type</th><th class="pro">Places</th><th class="pro">Companions</th><th class="pro">Notes</th></tr>
+      <tr><td>Japan</td><td>2019-04-01</td><td>2019-04-12</td><td>Leisure</td><td>Tokyo; Kyoto</td><td>Sam; Priya</td><td>Cherry blossoms</td></tr>
+      <tr><td>Singapore</td><td>2024-11-02</td><td>2024-11-05</td><td>Work</td><td></td><td></td><td></td></tr>
+    </table>
+    <ul>
+      <li><strong>Country</strong> — a name (<code>Japan</code>) or code (<code>JP</code>). A place in brackets, like <code>Japan (Okinawa)</code>, is understood too.</li>
+      <li><strong>From / To</strong> — dates like <code>2019-04-01</code>. Leave <strong>To</strong> blank for a single day.</li>
+      <li><strong>Type</strong> — <code>Leisure</code> or <code>Work</code>.</li>
+      <li><span class="pro">Places, Companions, Notes</span> — optional, and part of <strong>Hexstamp Pro</strong>. Separate multiple places or people with a semicolon (<code>;</code>). Free imports keep the first four columns.</li>
+    </ul>
+
+    <h2>Import it</h2>
+    <p>In Hexstamp, go to <strong>Settings → Import Trips</strong>, then either:</p>
+    <ol>
+      <li><strong>Choose the file</strong> — save your filled-in CSV to iCloud Drive (or AirDrop it to your phone) and pick it in the app; or</li>
+      <li><strong>Paste it</strong> — copy the rows from your spreadsheet and tap <strong>Paste from Clipboard</strong>.</li>
+    </ol>
+    <p>Hexstamp shows you every trip it read, so you can fix or skip anything
+    before it’s added. Nothing is imported until you confirm.</p>
+
+    <p style="color:var(--muted);font-size:0.95rem">Tip: this is easiest on a Mac or
+    iPad — edit the spreadsheet and import in the same place. On a Mac, save to
+    iCloud Drive and the file appears on your iPhone automatically.</p>
+
+    <footer>© 2026 Hexstamp</footer>
+  </main>
+</body>
+</html>
