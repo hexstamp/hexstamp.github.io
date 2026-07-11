@@ -148,6 +148,10 @@
     .row.reverse .art { order: 1; }
     .row .art { display: flex; justify-content: center; }
     .row .art .phone { max-width: 270px; }
+    /* Two phones fanned together (import section). */
+    .row .art.duo .phone { max-width: 172px; }
+    .row .art.duo .phone:first-child { transform: rotate(-4deg); }
+    .row .art.duo .phone:last-child { transform: rotate(4deg); margin-left: -30px; }
     .eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -273,6 +277,19 @@
     </section>
 
     <section class="row reverse">
+      <div class="copy">
+        <p class="eyebrow">Import your history</p>
+        <h2>Been travelling for years? Bring it all in.</h2>
+        <p>Don’t tap in decades of trips one at a time. Load your whole history from a spreadsheet — or paste it straight from Numbers, Excel or Sheets. A review screen lets you check and fix everything before anything’s added.</p>
+        <p style="margin-bottom:0"><a href="import.html">See how import works →</a></p>
+      </div>
+      <div class="art duo">
+        <div class="phone"><img src="images/screen-import.png" alt="Import Trips screen with template download, choose file and paste options"></div>
+        <div class="phone"><img src="images/screen-import-review.png" alt="Import review screen listing trips with places and companions before importing"></div>
+      </div>
+    </section>
+
+    <section class="row">
       <div class="copy">
         <p class="eyebrow">At a glance</p>
         <h2>Your next trip, on your home screen.</h2>
