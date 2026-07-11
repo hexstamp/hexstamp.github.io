@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "STQ2Z7P32C.au.com.hexstamp.app",
+          "STQ2Z7P32C.au.com.hexstamp.app.dev"
+        ],
+        "components": [
+          { "/": "/t", "comment": "Shared-trip seed links (payload rides in the fragment)" }
+        ]
+      }
+    ]
+  }
+}
